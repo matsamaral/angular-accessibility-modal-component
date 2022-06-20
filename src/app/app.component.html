@@ -1,0 +1,45 @@
+<h1>Accessible Modal Component</h1>
+
+<p>Welcome to the accessible modal testing page!</p>
+
+<button appFocusBack (click)="show()" class="button button-primary" type="button">Show modal</button>
+
+
+<ng-template #modal>
+  <form [formGroup]="form" (ngSubmit)="submit()">
+
+    <div class="form-field">
+      <label for="firstName">First Name:</label>
+      <input aria-describedby="firstName-error" id="firstName" formControlName="firstName" [attr.aria-invalid]="form.get('firstName')?.invalid">
+      <span id="firstName-error" class="validation-error" *ngIf="form.get('firstName')?.errors?.required">
+        First name is required
+      </span>
+    </div>
+
+    <div class="form-field">
+      <label for="surname">Surname:</label>
+      <input aria-describedby="surname-error" id="surname" formControlName="surname" [attr.aria-invalid]="form.get('surname')?.invalid">
+      <span id="surname-error" class="validation-error" *ngIf="form.get('surname')?.errors?.required">
+        Surname is required
+      </span>
+    </div>
+
+    <div class="form-field">
+      <label for="age">Age:</label>
+      <input aria-describedby="age-error" id="age" formControlName="age" [attr.aria-invalid]="form.get('age')?.invalid">
+      <span id="age-error" class="validation-error" *ngIf="form.get('age')?.errors?.required">
+        Age is required
+      </span>
+    </div>
+
+    <label for="info">Subscribe to news letter</label>
+    <input type="checkbox" formControlName="info" name="info" id="info">
+    <p [@fade] *ngIf="form.get('info').value">This is a placeholder for more information</p>
+
+    <div class="button-group">
+      <button [attr.aria-disabled]="form.invalid" type="submit" class="button button-primary">Submit</button>
+      <button type="button" class="button button-secondary" (click)="modalRef.close()">Cancel</button>
+    </div>
+
+  </form>
+</ng-template>
